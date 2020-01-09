@@ -29,7 +29,8 @@ backup_project () {
 function pushover_install () {
   log_warning "function: pushover_install"
   if [[ ! -e "./pushover" ]]; then
-    wget https://gist.github.com/pleasemarkdarkly/05cf0e99c39d176f15603d4a3870c67c/raw -O ./pushover
+    source .env
+    wget $pushover_url -O ./pushover
     chmod +x ./pushover
     cp -v ./pushover /usr/local/bin
     ./pushover "bootstrap installed successfully"
@@ -135,7 +136,7 @@ function main () {
 
 function cleanup () {
   log_warning "function: cleanup"
-  find . -maxdepth 1 -mmin +2 -type f ./*.log -exec rm {} \;
+  # find . -maxdepth 1 -mmin +2 -name ./*.log -exec rm {} \;
 }
 
 verify_log4bash
